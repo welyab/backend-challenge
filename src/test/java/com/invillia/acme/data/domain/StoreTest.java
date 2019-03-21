@@ -3,6 +3,8 @@ package com.invillia.acme.data.domain;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.invillia.acme.data.model.Store;
+
 /**
  * Unit tests for <code>Store</code> class.
  *

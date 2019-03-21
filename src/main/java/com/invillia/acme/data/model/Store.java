@@ -1,4 +1,4 @@
-package com.invillia.acme.data.domain;
+package com.invillia.acme.data.model;
 
 import java.io.Serializable;
 
