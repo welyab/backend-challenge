@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * The representative class for a <code>Store</code>.
@@ -14,6 +16,7 @@ import javax.persistence.Id;
  * @author Welyab Paula
  */
 @Entity
+@Table(name = "store")
 public class Store implements Serializable {
 
 	@SuppressWarnings("javadoc")
@@ -39,6 +42,15 @@ public class Store implements Serializable {
 			nullable = false
 	)
 	private String name;
+
+	/**
+	 * The location address for this store.
+	 */
+	@OneToOne(
+			optional = false,
+			mappedBy = "store"
+	)
+	private StoreAddress address;
 
 	/**
 	 * Retrieves the identifier of this store entry.
