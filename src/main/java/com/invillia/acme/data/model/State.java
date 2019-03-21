@@ -3,11 +3,13 @@ package com.invillia.acme.data.model;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * A state is a common political division in a country, sometimes called province as well. This
@@ -15,6 +17,8 @@ import javax.persistence.ManyToOne;
  *
  * @author Welyab Paula
  */
+@Entity
+@Table(name = "state")
 public class State implements Serializable {
 
 	@SuppressWarnings("javadoc")
