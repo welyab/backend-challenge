@@ -1,6 +1,7 @@
 package com.invillia.acme.data.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,12 +28,27 @@ public class Store implements Serializable {
 
 	/**
 	 * Database identifier for <code>Store</code> entries.
+	 *
+	 * <p>
+	 * This value should not appear in the JSON generated in REST controllers.
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	@JsonIgnore
 	private Long id;
+
+	/**
+	 * External entry identifier. This code may be used as key.
+	 *
+	 * @see UUID
+	 */
+	@Column(
+			name = "code",
+			nullable = false,
+			length = 10
+	)
+	private String code;
 
 	/**
 	 * The name of this store entry.
@@ -74,6 +90,29 @@ public class Store implements Serializable {
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	/**
+	 * Retrieves the code identifier of this store.
+	 *
+	 * <p>
+	 * The code identifier is an <code>UUID</code> generated randomly during entry persistence.
+	 *
+	 * @return The code value.
+	 *
+	 * @see UUID
+	 */
+	public String getCode() {
+		return code;
+	}
+
+	/**
+	 * Adjusts the code identifier of this store.
+	 *
+	 * @param code The code value.
+	 */
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	/**
