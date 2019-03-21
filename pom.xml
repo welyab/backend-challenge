@@ -13,6 +13,20 @@
 	<name>invillia</name>
 	<description>Demo project for Spring Boot</description>
 
+	<developers>
+		<developer>
+			<name>Welyab Paula</name>
+			<organization>Invillia</organization>
+			<organizationUrl>https://invillia.com/</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>-3</timezone>
+			<email>welyab.paula@invillia.com</email>
+			<url>https://javalidades.com.br</url>
+		</developer>
+	</developers>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
