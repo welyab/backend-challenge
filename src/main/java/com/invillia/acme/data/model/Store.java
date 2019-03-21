@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @Entity
 @Table(name = "store")
-public class Store implements Serializable {
+public class Store implements Validated, Serializable {
 
 	@SuppressWarnings("javadoc")
 	private static final long serialVersionUID = 1L;
@@ -131,6 +131,24 @@ public class Store implements Serializable {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * Retrieves the location address of this store.
+	 *
+	 * @return The address.
+	 */
+	public StoreAddress getAddress() {
+		return address;
+	}
+
+	/**
+	 * Adjusts the address.
+	 *
+	 * @param address The address.
+	 */
+	public void setAddress(StoreAddress address) {
+		this.address = address;
 	}
 
 	@Override
