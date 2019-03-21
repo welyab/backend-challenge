@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * The representative class for a <code>Store</code>.
  *
@@ -28,6 +31,7 @@ public class Store implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
+	@JsonIgnore
 	private Long id;
 
 	/**
@@ -41,6 +45,7 @@ public class Store implements Serializable {
 			length = 60,
 			nullable = false
 	)
+	@JsonProperty(value = "name")
 	private String name;
 
 	/**
@@ -50,6 +55,7 @@ public class Store implements Serializable {
 			optional = false,
 			mappedBy = "store"
 	)
+	@JsonProperty(value = "address")
 	private StoreAddress address;
 
 	/**
