@@ -24,7 +24,7 @@ public class StoreService {
 	private StoreRepository storeRepository;
 
 	/**
-	 * Saves os updates the information of given store.
+	 * Saves or updates the information of given store.
 	 *
 	 * <p>
 	 * If the given store has an <code>identification</code>
@@ -34,7 +34,7 @@ public class StoreService {
 	 *
 	 * @param store The store to be saved or updated.
 	 *
-	 * @return The <i>saved</i> or <i>updated</i> store object. It recomended to
+	 * @return The <i>saved</i> or <i>updated</i> store object. It recommended to
 	 *         use the returned object.
 	 */
 	public Store saveOrUpdate(Store store) {
