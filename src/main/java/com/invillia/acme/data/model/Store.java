@@ -3,15 +3,15 @@ package com.invillia.acme.data.model;
 import java.io.Serializable;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.hateoas.ResourceSupport;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -21,32 +21,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @Entity
 @Table(name = "store")
-public class Store implements Validated, Serializable {
+public class Store extends ResourceSupport implements Validated, Serializable {
 
 	@SuppressWarnings("javadoc")
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Database identifier for <code>Store</code> entries.
-	 *
-	 * <p>
-	 * This value should not appear in the JSON generated in REST controllers.
-	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	@JsonIgnore
-	private Long id;
-
-	/**
-	 * External entry identifier. This code may be used as key.
+	 * Store identifier.
 	 *
 	 * @see UUID
 	 */
+	@Id
 	@Column(
-			name = "code",
-			nullable = false,
-			length = 10
+		name = "code",
+		nullable = false,
+		length = 10
 	)
 	private String code;
 
@@ -57,9 +46,9 @@ public class Store implements Validated, Serializable {
 	 * Values <code>null</code> can't be persisted.
 	 */
 	@Column(
-			name = "name",
-			length = 60,
-			nullable = false
+		name = "name",
+		length = 60,
+		nullable = false
 	)
 	@JsonProperty(value = "name")
 	private String name;
@@ -68,35 +57,19 @@ public class Store implements Validated, Serializable {
 	 * The location address for this store.
 	 */
 	@OneToOne(
-			optional = false,
-			mappedBy = "store"
+		optional = false,
+		mappedBy = "store",
+		cascade = CascadeType.ALL
 	)
 	@JsonProperty(value = "address")
 	private StoreAddress address;
 
 	/**
-	 * Retrieves the identifier of this store entry.
-	 *
-	 * @return The store identifier. May return <code>null</code> for brand new objects.
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * Adjusts the identifier of this store.
-	 *
-	 * @param id The store identifier.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
 	 * Retrieves the code identifier of this store.
 	 *
 	 * <p>
-	 * The code identifier is an <code>UUID</code> generated randomly during entry persistence.
+	 * The code identifier is an <code>UUID</code> generated randomly during
+	 * entry persistence.
 	 *
 	 * @return The code value.
 	 *
@@ -118,7 +91,8 @@ public class Store implements Validated, Serializable {
 	/**
 	 * Retrieves the registered name for this store.
 	 *
-	 * @return The store name. May return <code>null</code> for brand new objects.
+	 * @return The store name. May return <code>null</code> for brand new
+	 *         objects.
 	 */
 	public String getName() {
 		return name;
@@ -154,8 +128,8 @@ public class Store implements Validated, Serializable {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
-		result = prime * result + (id == null ? 0 : id.hashCode());
+		int result = super.hashCode();
+		result = prime * result + (code == null ? 0 : code.hashCode());
 		return result;
 	}
 
@@ -164,20 +138,25 @@ public class Store implements Validated, Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
+		if (!super.equals(obj)) {
 			return false;
 		}
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
 		Store other = (Store) obj;
-		if (id == null) {
-			if (other.id != null) {
+		if (code == null) {
+			if (other.code != null) {
 				return false;
 			}
-		} else if (!id.equals(other.id)) {
+		} else if (!code.equals(other.code)) {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Store [name=" + name + "]";
 	}
 }

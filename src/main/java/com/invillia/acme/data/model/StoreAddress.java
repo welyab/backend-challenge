@@ -37,8 +37,8 @@ public class StoreAddress implements Serializable {
 	 */
 	@OneToOne(optional = false)
 	@JoinColumn(
-			name = "id_store",
-			nullable = false
+		name = "id_store",
+		nullable = false
 	)
 	private Store store;
 
@@ -46,9 +46,9 @@ public class StoreAddress implements Serializable {
 	 * The name of the public place where the store is located.
 	 */
 	@Column(
-			name = "public_place",
-			length = 40,
-			nullable = false
+		name = "public_place",
+		length = 40,
+		nullable = false
 	)
 	private String publicPlace;
 
@@ -56,8 +56,8 @@ public class StoreAddress implements Serializable {
 	 * Complementary information to the address of store.
 	 */
 	@Column(
-			name = "complementary_info",
-			length = 40
+		name = "complementary_info",
+		length = 40
 	)
 	private String complementaryInfo;
 
@@ -66,8 +66,8 @@ public class StoreAddress implements Serializable {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(
-			name = "id_city",
-			nullable = false
+		name = "id_city",
+		nullable = false
 	)
 	private City city;
 
@@ -75,8 +75,8 @@ public class StoreAddress implements Serializable {
 	 * The postal code.
 	 */
 	@Column(
-			name = "postal_code",
-			length = 20
+		name = "postal_code",
+		length = 20
 	)
 	private String postalCode;
 

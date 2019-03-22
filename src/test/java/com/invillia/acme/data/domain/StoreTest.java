@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.invillia.acme.data.model.Store;
+import com.invillia.acme.util.UuidUtils;
 
 /**
  * Unit tests for <code>Store</code> class.
@@ -15,10 +16,11 @@ public class StoreTest {
 	@Test
 	@SuppressWarnings("javadoc")
 	public void equalsShouldReturnTrueForStoresWithSameIdentifiers() {
+		String code = UuidUtils.random();
 		Store store1 = new Store();
-		store1.setId(100L);
+		store1.setCode(code);
 		Store store2 = new Store();
-		store2.setId(100L);
+		store2.setCode(code);
 		Assert.assertTrue(store1.equals(store2));
 	}
 
@@ -26,9 +28,9 @@ public class StoreTest {
 	@SuppressWarnings("javadoc")
 	public void equalsShouldReturnFalseForStoresWithDifferentIdentifiers() {
 		Store store1 = new Store();
-		store1.setId(100L);
+		store1.setCode(UuidUtils.random());
 		Store store2 = new Store();
-		store2.setId(200L);
+		store2.setCode(UuidUtils.random());
 		Assert.assertFalse(store1.equals(store2));
 	}
 }
