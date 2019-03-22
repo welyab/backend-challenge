@@ -1,6 +1,7 @@
 package com.invillia.acme.data.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,11 @@ import javax.persistence.Id;
  */
 @Entity
 public class Product implements Serializable {
+
+	/**
+	 * The minimum price for
+	 */
+	public static final BigDecimal MIN_PRICE = new BigDecimal("0.01");
 
 	@SuppressWarnings("javadoc")
 	private static final long serialVersionUID = 1L;
