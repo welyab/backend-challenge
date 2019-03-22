@@ -9,7 +9,7 @@ import javax.persistence.Id;
 
 /**
  * An product sold in the store.
- * 
+ *
  * @author Welyab Paula
  */
 @Entity
@@ -37,8 +37,25 @@ public class Product implements Serializable {
 	private String description;
 
 	/**
+	 * Creates a new product with all fields empty.
+	 */
+	public Product() {
+	}
+
+	/**
+	 * Creates a new product using given information.
+	 *
+	 * @param code The product code.
+	 * @param description The product description.
+	 */
+	public Product(String code, String description) {
+		this.code = code;
+		this.description = description;
+	}
+
+	/**
 	 * Retrieves code of this product.
-	 * 
+	 *
 	 * @return The code value.
 	 */
 	public String getCode() {
@@ -47,7 +64,7 @@ public class Product implements Serializable {
 
 	/**
 	 * Adjusts the code of this prodcut.
-	 * 
+	 *
 	 * @param code The code.
 	 */
 	public void setCode(String code) {
@@ -56,7 +73,7 @@ public class Product implements Serializable {
 
 	/**
 	 * Retrieves the description of this product.
-	 * 
+	 *
 	 * @return The description.
 	 */
 	public String getDescription() {
@@ -65,7 +82,7 @@ public class Product implements Serializable {
 
 	/**
 	 * Adjusts the description of this product.
-	 * 
+	 *
 	 * @param description The description.
 	 */
 	public void setDescription(String description) {
