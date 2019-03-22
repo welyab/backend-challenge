@@ -1,4 +1,4 @@
-package com.invillia.acme.data.model.repository;
+package com.invillia.acme.data.repository;
 
 import java.util.List;
 

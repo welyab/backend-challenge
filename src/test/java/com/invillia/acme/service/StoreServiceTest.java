@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.invillia.acme.data.model.repository.StoreRepository;
+import com.invillia.acme.data.repository.StoreRepository;
 
 /**
  * Unit tests for the class <code>StoreService</code>.

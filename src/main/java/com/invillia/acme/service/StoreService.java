@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.base.Preconditions;
 import com.invillia.acme.data.model.Store;
-import com.invillia.acme.data.model.repository.StoreRepository;
+import com.invillia.acme.data.repository.StoreRepository;
 import com.invillia.acme.util.UuidUtils;
 
 /**
