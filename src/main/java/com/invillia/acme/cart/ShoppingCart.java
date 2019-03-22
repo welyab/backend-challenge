@@ -111,6 +111,19 @@ public class ShoppingCart {
 	}
 
 	/**
+	 * Evaluates if there is in the cart some with specified product.
+	 *
+	 * @param product The product being searched for.
+	 *
+	 * @return A value <code>true</code> if the cart has the specific product, or <code>false</code>
+	 *         otherwise.
+	 */
+	public boolean contains(Product product) {
+		Preconditions.checkNotNull(product, "product");
+		return indexByProduct(product) >= 0;
+	}
+
+	/**
 	 * Retrieves the item at position indicated by <code>index</code> parameter.
 	 *
 	 * <p>

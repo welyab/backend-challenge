@@ -104,6 +104,17 @@ public class ShoppingCartTest {
 		Assert.assertEquals(new BigDecimal("20.32"), cart.getItem(0).getQuantity());
 	}
 
+	@Test
+	@SuppressWarnings("javadoc")
+	public void removeItemProductQuantityShouldRemoveProductIfQuantityIsZeroOrLess() {
+		ShoppingCart cart = new ShoppingCart();
+		Product product = new Product("A3221", "Computer");
+		cart.addItem(product, new BigDecimal("62.0"), new BigDecimal("50.32"));
+		Assert.assertEquals("A3221", cart.getItem(0).getProduct().getProductCode());
+		cart.removeItem(product, new BigDecimal("60.00"));
+		Assert.assertFalse(cart.contains(product));
+	}
+
 
 	@Test(expected = NullPointerException.class)
 	@SuppressWarnings("javadoc")
@@ -144,5 +155,23 @@ public class ShoppingCartTest {
 		cart.addItem(product, new BigDecimal("62.0"), new BigDecimal("50.32"));
 		Assert.assertEquals("A3221", cart.getItem(0).getProduct().getProductCode());
 		cart.removeItem(product, new BigDecimal("-2.00"));
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void containsProductShouldReturnTrueWhenProductIsInTheCart() {
+		ShoppingCart cart = new ShoppingCart();
+		Product product = new Product("A3221", "Computer");
+		cart.addItem(product, new BigDecimal("62.0"), new BigDecimal("50.32"));
+		Assert.assertTrue(cart.contains(product));
+	}
+
+	@Test
+	@SuppressWarnings("javadoc")
+	public void containsProductShouldReturnFalseWhenProductIsNotInTheCart() {
+		ShoppingCart cart = new ShoppingCart();
+		Product product = new Product("A3221", "Computer");
+		cart.addItem(product, new BigDecimal("62.0"), new BigDecimal("50.32"));
+		Assert.assertFalse(cart.contains(new Product("A3953", "Computer 2")));
 	}
 }
