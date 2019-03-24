@@ -66,6 +66,22 @@ public class Store implements Serializable {
 	private StoreAddress address;
 
 	/**
+	 * Creates a new <code>Store</code> object.
+	 */
+	public Store() {
+	}
+
+	/**
+	 * Creates a new <code>Store</code> object using given <code>id</code>
+	 * parameter.
+	 * 
+	 * @param id The database identification for the being created store.
+	 */
+	public Store(Long id) {
+		this.id = id;
+	}
+
+	/**
 	 * Retrieves the code identifier of this store.
 	 *
 	 * <p>
