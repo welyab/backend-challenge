@@ -57,11 +57,11 @@ public class StoreAddress implements Serializable {
 	 * The location indicator.
 	 */
 	@Column(
-		name = "location_id",
+		name = "number",
 		length = 10,
 		nullable = false
 	)
-	private String locationId;
+	private String number;
 
 	/**
 	 * Complementary information to the address of store.
@@ -80,7 +80,17 @@ public class StoreAddress implements Serializable {
 		name = "id_city",
 		nullable = false
 	)
-	private City city;
+	private String cityName;
+
+	/**
+	 * The name of the state/province where the city is located.
+	 */
+	private String stateName;
+
+	/**
+	 * The name of the address' country.
+	 */
+	private String countryName;
 
 	/**
 	 * The postal code.
@@ -147,24 +157,6 @@ public class StoreAddress implements Serializable {
 	}
 
 	/**
-	 * Retrieves the location identifier.
-	 * 
-	 * @return The location identifier.
-	 */
-	public String getLocationId() {
-		return locationId;
-	}
-
-	/**
-	 * Adjusts the location identifier.
-	 * 
-	 * @param locationId The location identifier.
-	 */
-	public void setLocationId(String locationId) {
-		this.locationId = locationId;
-	}
-
-	/**
 	 * Retrieves the complementary information to the store address.
 	 *
 	 * @return The complementary information.
@@ -183,21 +175,75 @@ public class StoreAddress implements Serializable {
 	}
 
 	/**
-	 * Retrieves the city where the store is located.
-	 *
-	 * @return The city.
+	 * Retrieves the location number, apartment/room number, etc.
+	 * 
+	 * @return The number.
 	 */
-	public City getCity() {
-		return city;
+	public String getNumber() {
+		return number;
 	}
 
 	/**
-	 * Adjusts the city information of this address.
-	 *
-	 * @param city The city.
+	 * Adjusts the location number, appartment/room number, etc.
+	 * 
+	 * @param number The number.
 	 */
-	public void setCity(City city) {
-		this.city = city;
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	/**
+	 * Retrieves the city name.
+	 * 
+	 * @return THe city name.
+	 */
+	public String getCityName() {
+		return cityName;
+	}
+
+	/**
+	 * Adjusts the city name.
+	 * 
+	 * @param cityName The city name.
+	 */
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	/**
+	 * Retrieves the state/province name.
+	 * 
+	 * @return The state/province name.
+	 */
+	public String getStateName() {
+		return stateName;
+	}
+
+	/**
+	 * Adjusts the state/province name.
+	 * 
+	 * @param stateName The state/province name.
+	 */
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+
+	/**
+	 * Retrieves the country name.
+	 * 
+	 * @return THe country name.
+	 */
+	public String getCountryName() {
+		return countryName;
+	}
+
+	/**
+	 * Adjusts the country name.
+	 * 
+	 * @param countryName The country name.
+	 */
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
 	}
 
 	/**
