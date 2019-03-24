@@ -2,6 +2,7 @@ package com.invillia.acme.data.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +13,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * A state is a common political division in a country, sometimes called province as well. This
- * class represents those divisions and some other kinds of country organization.
+ * A state is a common political division in a country, sometimes called
+ * province as well. This
+ * class represents those divisions and some other kinds of country
+ * organization.
  *
  * @author Welyab Paula
  */
@@ -36,9 +39,9 @@ public class State implements Serializable {
 	 * The state/province name.
 	 */
 	@Column(
-			name = "name",
-			length = 60,
-			nullable = false
+		name = "name",
+		length = 60,
+		nullable = false
 	)
 	private String name;
 
@@ -46,19 +49,22 @@ public class State implements Serializable {
 	 * The acronym representative for this state.
 	 */
 	@Column(
-			name = "acronym",
-			length = 10,
-			nullable = false
+		name = "acronym",
+		length = 10,
+		nullable = false
 	)
 	private String acronym;
 
 	/**
 	 * The country where this state is located.
 	 */
-	@ManyToOne(optional = false)
+	@ManyToOne(
+		optional = false,
+		cascade = CascadeType.PERSIST
+	)
 	@JoinColumn(
-			name = "id_country",
-			nullable = false
+		name = "id_country",
+		nullable = false
 	)
 	private Country country;
 

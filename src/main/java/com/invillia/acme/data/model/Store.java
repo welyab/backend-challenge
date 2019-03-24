@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @Entity
 @Table(name = "store")
-public class Store extends ResourceSupport implements Validated, Serializable {
+public class Store extends ResourceSupport implements Serializable {
 
 	@SuppressWarnings("javadoc")
 	private static final long serialVersionUID = 1L;

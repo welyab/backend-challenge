@@ -60,7 +60,7 @@ public class CartProduct implements Comparable<CartProduct>, Serializable {
 			"Parameter 'productCode' cannot be empty."
 		);
 		Preconditions.checkArgument(
-			StringUtils.isNoneBlank(productCode),
+			StringUtils.isNoneBlank(productDescription),
 			"Parameter 'productDescription' cannot be empty"
 		);
 		this.productCode = productCode;

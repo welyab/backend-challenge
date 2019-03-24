@@ -2,6 +2,7 @@ package com.invillia.acme.data.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,19 +33,22 @@ public class City implements Serializable {
 	 * The city name.
 	 */
 	@Column(
-			name = "name",
-			length = 60,
-			nullable = false
+		name = "name",
+		length = 60,
+		nullable = false
 	)
 	private String name;
 
 	/**
 	 * The state/province where this city is located.
 	 */
-	@ManyToOne(optional = false)
+	@ManyToOne(
+		optional = false,
+		cascade = CascadeType.PERSIST
+	)
 	@JoinColumn(
-			name = "id_state",
-			nullable = false
+		name = "id_state",
+		nullable = false
 	)
 	private State state;
 

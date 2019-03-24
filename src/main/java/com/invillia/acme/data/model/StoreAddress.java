@@ -2,6 +2,7 @@ package com.invillia.acme.data.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,6 +54,16 @@ public class StoreAddress implements Serializable {
 	private String publicPlace;
 
 	/**
+	 * The location indicator.
+	 */
+	@Column(
+		name = "location_id",
+		length = 10,
+		nullable = false
+	)
+	private String locationId;
+
+	/**
 	 * Complementary information to the address of store.
 	 */
 	@Column(
@@ -64,7 +75,7 @@ public class StoreAddress implements Serializable {
 	/**
 	 * The city where this store is located.
 	 */
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, cascade = CascadeType.PERSIST)
 	@JoinColumn(
 		name = "id_city",
 		nullable = false
@@ -133,6 +144,24 @@ public class StoreAddress implements Serializable {
 	 */
 	public void setPublicPlace(String publicPlace) {
 		this.publicPlace = publicPlace;
+	}
+
+	/**
+	 * Retrieves the location identifier.
+	 * 
+	 * @return The location identifier.
+	 */
+	public String getLocationId() {
+		return locationId;
+	}
+
+	/**
+	 * Adjusts the location identifier.
+	 * 
+	 * @param locationId The location identifier.
+	 */
+	public void setLocationId(String locationId) {
+		this.locationId = locationId;
 	}
 
 	/**

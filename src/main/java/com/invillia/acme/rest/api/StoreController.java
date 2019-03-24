@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,6 +65,30 @@ public class StoreController {
 	/**
 	 * Creates a new <code>Store</code>.
 	 * 
+	 * @param code The code of the store to be updated.
+	 * @param store The store to be saved.
+	 * 
+	 * @return The response for further Java/HTTP translation.
+	 */
+	@PutMapping(path = "{code}")
+	public HttpEntity<Store> updateStore(
+		@PathVariable(name = "code") String code,
+		@RequestBody Store store
+	) {
+		if (!store.getCode().equals(code)) {
+			return ResponseEntity.badRequest().build();
+		}
+		store = storeService.saveOrUpdate(store);
+		ControllerLinkBuilder self = linkTo(methodOn(StoreController.class).getStore(store.getCode()));
+		store.add(self.withSelfRel());
+		return ResponseEntity
+			.created(self.toUri())
+			.body(store);
+	}
+
+	/**
+	 * Creates a new <code>Store</code>.
+	 * 
 	 * @param store The store to be saved.
 	 * 
 	 * @return The response for further Java/HTTP translation.
@@ -76,7 +101,6 @@ public class StoreController {
 		store = storeService.saveOrUpdate(store);
 		ControllerLinkBuilder self = linkTo(methodOn(StoreController.class).getStore(store.getCode()));
 		store.add(self.withSelfRel());
-		storeService.saveOrUpdate(store);
 		return ResponseEntity
 			.created(self.toUri())
 			.body(store);
