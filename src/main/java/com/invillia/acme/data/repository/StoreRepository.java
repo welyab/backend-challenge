@@ -2,7 +2,7 @@ package com.invillia.acme.data.repository;
 
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import com.invillia.acme.data.model.Store;
@@ -13,7 +13,7 @@ import com.invillia.acme.data.model.Store;
  * @author Welyab Paula
  */
 @Repository
-public interface StoreRepository extends CrudRepository<Store, String> {
+public interface StoreRepository extends PagingAndSortingRepository<Store, Long> {
 
 	/**
 	 * Finds the stores that matches with given filters.

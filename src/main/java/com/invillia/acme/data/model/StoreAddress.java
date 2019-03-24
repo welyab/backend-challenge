@@ -2,14 +2,12 @@ package com.invillia.acme.data.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -75,9 +73,9 @@ public class StoreAddress implements Serializable {
 	/**
 	 * The city where this store is located.
 	 */
-	@ManyToOne(optional = false, cascade = CascadeType.PERSIST)
-	@JoinColumn(
-		name = "id_city",
+	@Column(
+		name = "city_name",
+		length = 60,
 		nullable = false
 	)
 	private String cityName;
@@ -85,11 +83,21 @@ public class StoreAddress implements Serializable {
 	/**
 	 * The name of the state/province where the city is located.
 	 */
+	@Column(
+		name = "state_name",
+		length = 60,
+		nullable = false
+	)
 	private String stateName;
 
 	/**
 	 * The name of the address' country.
 	 */
+	@Column(
+		name = "country_name",
+		length = 60,
+		nullable = false
+	)
 	private String countryName;
 
 	/**

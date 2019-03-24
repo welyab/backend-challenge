@@ -31,7 +31,7 @@ public class StoreServiceTest {
 
 	@Test(expected = NullPointerException.class)
 	@SuppressWarnings("javadoc")
-	public void saveOrUpdateShouldThrowNullPointerExceptionWhenStoreIsNull() {
-		storeService.saveOrUpdate(null);
+	public void saveOrUpdateShouldThrowNullPointerExceptionWhenStoreIsNull() throws IdPresentException {
+		storeService.save(null);
 	}
 }

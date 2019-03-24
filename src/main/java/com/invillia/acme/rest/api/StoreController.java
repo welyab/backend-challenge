@@ -5,22 +5,29 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
-import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.invillia.acme.data.model.Store;
+import com.invillia.acme.rest.api.dto.StoreDto;
+import com.invillia.acme.rest.api.dto.PagedStoresDto;
+import com.invillia.acme.service.EntryNotFoundException;
+import com.invillia.acme.service.IdPresentException;
 import com.invillia.acme.service.StoreService;
 
 /**
@@ -38,71 +45,94 @@ public class StoreController {
 	@SuppressWarnings("javadoc")
 	private StoreService storeService;
 
-	/**
-	 * Retrieves the store located by the given <code>code</code> parameter.
-	 * 
-	 * @param code The store's code.
-	 * 
-	 * @return The HTTP response body with information about requested store..
-	 */
-	@GetMapping(path = "{code}")
-	public HttpEntity<Store> getStore(@PathVariable(name = "code") String code) {
-		return ResponseEntity.of(Optional.ofNullable(storeService.findByCode(code)));
-	}
-
-	/**
-	 * Find registered stores by aplying given parametes as filters.
-	 * 
-	 * @param name
-	 * 
-	 * @return The HTTP response body with information about requested stores.
-	 */
-	@GetMapping
-	public HttpEntity<List<Store>> findStores(@MatrixVariable(name = "name") String name) {
-		return ResponseEntity.ok(storeService.find(name));
-	}
-
-	/**
-	 * Creates a new <code>Store</code>.
-	 * 
-	 * @param code The code of the store to be updated.
-	 * @param store The store to be saved.
-	 * 
-	 * @return The response for further Java/HTTP translation.
-	 */
-	@PutMapping(path = "{code}")
-	public HttpEntity<Store> updateStore(
-		@PathVariable(name = "code") String code,
-		@RequestBody Store store
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PagedStoresDto> getAllPaged(
+		@RequestParam(name = "pageNumber", required = false, defaultValue = "0") Integer pageIndex
 	) {
-		if (!store.getCode().equals(code)) {
-			return ResponseEntity.badRequest().build();
+		Page<Store> page = storeService.findAllPaged(pageIndex);
+		List<StoreDto> dtos = page.stream()
+			.map(StoreDto::new)
+			.map(this::fillCommonLinks)
+			.collect(Collectors.toList());
+		PagedStoresDto listDto = new PagedStoresDto();
+		listDto.setStores(dtos);
+		listDto.setPageNumber(page.getNumber());
+		listDto.setPageSize(page.getSize());
+		listDto.setPageTotalItems(page.getNumberOfElements());
+		listDto.setTotalItems((int) page.getTotalElements());
+
+		if (page.hasPrevious()) {
+			listDto.add(
+				linkTo(methodOn(StoreController.class).getAllPaged(page.previousPageable().getPageNumber()))
+					.withRel(Link.REL_PREVIOUS)
+			);
 		}
-		store = storeService.saveOrUpdate(store);
-		ControllerLinkBuilder self = linkTo(methodOn(StoreController.class).getStore(store.getCode()));
-		store.add(self.withSelfRel());
-		return ResponseEntity
-			.created(self.toUri())
-			.body(store);
+		if (page.hasNext()) {
+			listDto.add(
+				linkTo(methodOn(StoreController.class).getAllPaged(page.nextPageable().getPageNumber()))
+					.withRel(Link.REL_NEXT)
+			);
+		}
+		return ResponseEntity.ok(listDto);
 	}
 
-	/**
-	 * Creates a new <code>Store</code>.
-	 * 
-	 * @param store The store to be saved.
-	 * 
-	 * @return The response for further Java/HTTP translation.
-	 */
-	@PostMapping
-	public HttpEntity<Store> saveStore(@RequestBody Store store) {
-		if (StringUtils.isNotBlank(store.getCode())) {
-			return ResponseEntity.badRequest().build();
-		}
-		store = storeService.saveOrUpdate(store);
-		ControllerLinkBuilder self = linkTo(methodOn(StoreController.class).getStore(store.getCode()));
-		store.add(self.withSelfRel());
+	@GetMapping(
+		path = "{id}",
+		produces = MediaType.APPLICATION_JSON_VALUE,
+		consumes = MediaType.APPLICATION_JSON_VALUE
+	)
+	public ResponseEntity<StoreDto> get(@PathVariable(name = "id") Long id) {
+		Store store = storeService.findById(id);
+		return ResponseEntity.of(
+			Optional.ofNullable(store)
+				.map(StoreDto::new)
+				.map(this::fillCommonLinks)
+		);
+	}
+
+	@PostMapping(
+		produces = MediaType.APPLICATION_JSON_VALUE,
+		consumes = MediaType.APPLICATION_JSON_VALUE
+	)
+	public ResponseEntity<StoreDto> save(
+		@RequestBody StoreDto storeDto
+	) throws IdPresentException {
+		Store store = storeService.save(storeDto.toStore());
+		storeDto = new StoreDto(store);
+
 		return ResponseEntity
-			.created(self.toUri())
-			.body(store);
+			.created(getLinkBuilderForSelfRef(storeDto).toUri())
+			.body(fillCommonLinks(storeDto));
+	}
+
+	@PutMapping(
+		produces = MediaType.APPLICATION_JSON_VALUE,
+		consumes = MediaType.APPLICATION_JSON_VALUE
+	)
+	public ResponseEntity<StoreDto> update(
+		@RequestBody StoreDto storeDto
+	) throws EntryNotFoundException {
+		Store store = storeService.update(storeDto.toStore());
+		storeDto = new StoreDto(store);
+
+		return ResponseEntity
+			.created(getLinkBuilderForSelfRef(storeDto).toUri())
+			.body(fillCommonLinks(storeDto));
+	}
+
+	@DeleteMapping(path = "{id}")
+	public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) {
+		storeService.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+
+	private ControllerLinkBuilder getLinkBuilderForSelfRef(StoreDto storeDto) {
+		return linkTo(methodOn(StoreController.class).get(storeDto.getCode()));
+	}
+
+	private StoreDto fillCommonLinks(StoreDto storeDto) {
+		storeDto.add(getLinkBuilderForSelfRef(storeDto).withSelfRel());
+		storeDto.add(linkTo(methodOn(StoreController.class).delete(storeDto.getCode())).withSelfRel());
+		return storeDto;
 	}
 }
