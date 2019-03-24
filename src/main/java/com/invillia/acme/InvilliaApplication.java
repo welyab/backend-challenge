@@ -11,8 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class InvilliaApplication {
 
-	@SuppressWarnings("javadoc")
-	public static void main(String[] args) {
-		SpringApplication.run(InvilliaApplication.class, args);
-	}
+    @SuppressWarnings("javadoc")
+    public static void main(String[] args) {
+	SpringApplication.run(InvilliaApplication.class, args);
+    }
 }

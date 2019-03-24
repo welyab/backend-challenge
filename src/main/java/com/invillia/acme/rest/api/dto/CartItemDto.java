@@ -3,8 +3,8 @@ package com.invillia.acme.rest.api.dto;
 import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.invillia.acme.data.repository.CartItem;
-import com.invillia.acme.data.repository.Product;
+import com.invillia.acme.data.model.CartItem;
+import com.invillia.acme.data.model.Product;
 
 /**
  * Represents a cart item.

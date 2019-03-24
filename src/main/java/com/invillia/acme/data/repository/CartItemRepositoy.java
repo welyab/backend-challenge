@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.invillia.acme.data.model.Cart;
+import com.invillia.acme.data.model.CartItem;
+import com.invillia.acme.data.model.Product;
 
 public interface CartItemRepositoy extends JpaRepository<CartItem, Long> {
 

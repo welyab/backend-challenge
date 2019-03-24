@@ -1,4 +1,4 @@
-package com.invillia.acme.data.repository;
+package com.invillia.acme.data.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -8,31 +8,32 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-
-import com.invillia.acme.data.model.Cart;
+import javax.persistence.Table;
 
 @Entity
-public class CartItem implements Serializable {
+@Table(name = "product")
+@SuppressWarnings("javadoc")
+public class Product implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @OneToMany
-    @JoinColumn(name = "id_cart")
-    private Cart cart;
-
-    @OneToMany
-    @JoinColumn(name = "id_product")
-    private Product product;
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
-    @Column(name = "unit_price")
-    private BigDecimal quantity;
+    public Product() {
+    }
+
+    public Product(Long id) {
+	this.id = id;
+    }
 
     public Long getId() {
 	return id;
@@ -42,20 +43,12 @@ public class CartItem implements Serializable {
 	this.id = id;
     }
 
-    public Cart getCart() {
-	return cart;
+    public String getDescription() {
+	return description;
     }
 
-    public void setCart(Cart cart) {
-	this.cart = cart;
-    }
-
-    public Product getProduct() {
-	return product;
-    }
-
-    public void setProduct(Product product) {
-	this.product = product;
+    public void setDescription(String description) {
+	this.description = description;
     }
 
     public BigDecimal getUnitPrice() {
@@ -64,14 +57,6 @@ public class CartItem implements Serializable {
 
     public void setUnitPrice(BigDecimal unitPrice) {
 	this.unitPrice = unitPrice;
-    }
-
-    public BigDecimal getQuantity() {
-	return quantity;
-    }
-
-    public void setQuantity(BigDecimal quantity) {
-	this.quantity = quantity;
     }
 
     @Override
@@ -90,7 +75,7 @@ public class CartItem implements Serializable {
 	    return false;
 	if (getClass() != obj.getClass())
 	    return false;
-	CartItem other = (CartItem) obj;
+	Product other = (Product) obj;
 	if (id == null) {
 	    if (other.id != null)
 		return false;

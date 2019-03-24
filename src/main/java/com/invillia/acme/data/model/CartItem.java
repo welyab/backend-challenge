@@ -1,4 +1,4 @@
-package com.invillia.acme.data.repository;
+package com.invillia.acme.data.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -8,27 +8,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
-public class Product implements Serializable {
-
+@Table(name = "cart_item")
+public class CartItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "description")
-    private String description;
+    @ManyToOne
+    @JoinColumn(name = "id_cart")
+    private Cart cart;
+
+    @ManyToOne
+    @JoinColumn(name = "id_product")
+    private Product product;
 
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
-    public Product() {
-    }
-
-    public Product(Long id) {
-	this.id = id;
-    }
+    @Column(name = "quantity")
+    private BigDecimal quantity;
 
     public Long getId() {
 	return id;
@@ -38,12 +42,20 @@ public class Product implements Serializable {
 	this.id = id;
     }
 
-    public String getDescription() {
-	return description;
+    public Cart getCart() {
+	return cart;
     }
 
-    public void setDescription(String description) {
-	this.description = description;
+    public void setCart(Cart cart) {
+	this.cart = cart;
+    }
+
+    public Product getProduct() {
+	return product;
+    }
+
+    public void setProduct(Product product) {
+	this.product = product;
     }
 
     public BigDecimal getUnitPrice() {
@@ -52,6 +64,14 @@ public class Product implements Serializable {
 
     public void setUnitPrice(BigDecimal unitPrice) {
 	this.unitPrice = unitPrice;
+    }
+
+    public BigDecimal getQuantity() {
+	return quantity;
+    }
+
+    public void setQuantity(BigDecimal quantity) {
+	this.quantity = quantity;
     }
 
     @Override
@@ -70,7 +90,7 @@ public class Product implements Serializable {
 	    return false;
 	if (getClass() != obj.getClass())
 	    return false;
-	Product other = (Product) obj;
+	CartItem other = (CartItem) obj;
 	if (id == null) {
 	    if (other.id != null)
 		return false;

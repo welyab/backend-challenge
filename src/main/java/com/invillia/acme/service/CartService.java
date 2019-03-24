@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.base.Preconditions;
 import com.invillia.acme.data.model.Cart;
-import com.invillia.acme.data.repository.CartItem;
+import com.invillia.acme.data.model.CartItem;
+import com.invillia.acme.data.model.Product;
 import com.invillia.acme.data.repository.CartItemRepositoy;
 import com.invillia.acme.data.repository.CartRepository;
-import com.invillia.acme.data.repository.Product;
 import com.invillia.acme.data.repository.ProductRepository;
 
 /**
