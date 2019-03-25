@@ -44,10 +44,37 @@ The process should be closest possible to "real-time", balancing your choices in
 scalability.
 
 ## Nice to have features (describe or implement):
-* Asynchronous processing
-* Database
-* Docker
-* AWS
-* Security
-* Swagger
-* Clean Code
+### Asynchronous processing
+
+
+### Database
+
+The provided solution has a embedded database implemented in Java, called H2.
+The application creates the necessary tables to allow application run.
+
+### Docker
+
+The pom.xml has a Maven plugin capable to generate docker images of the target application.
+
+### AWS
+
+Amazon web services.
+
+### Security
+
+Implementing security with Spring Security, using Spring Security.
+JWT, OAuth, OpenID...
+
+### Swagger
+
+Swagger is a framework used for document REST APIs. Also, it is a platform
+to deliver API documentation (some way like Postman). It acts in the
+app by creating an auxiliary REST API that will describe the application's API.
+There is some components that allow creating of automatic in browser clients for API test.
+
+### Clean Code
+
+A code with low cyclomatic complexity is more easy to maintain. Also, layers and classes 
+with well defined purpose help to keep the application organized. TDD helps to
+coding with less error proneness. DDD (not exactly implemented here) helps to devlope
+uncoupled application with a ecosystem microservices oriented.
